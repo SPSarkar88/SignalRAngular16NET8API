@@ -1,4 +1,5 @@
 using MicroBlog.API.AppDbContext;
+using MicroBlog.API.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace MicroBlog.API
@@ -39,6 +40,7 @@ namespace MicroBlog.API
         {
             // Add services to the container.
             builder.Services.AddSqliteDbServices();
+            builder.Services.AddRepositoryServices();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -65,6 +67,21 @@ namespace MicroBlog.API
         {
             services.AddDbContext<BlogDbContext>(options =>
                            options.UseSqlite("Data Source=./Data/blog.db"));
+            return services;
+        }
+
+        public static IServiceCollection AddSwaggerGen(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new() { Title = "MicroBlog.API", Version = "v1" });
+            });
+            return services;
+        }
+
+        public static IServiceCollection AddRepositoryServices(this IServiceCollection services)
+        {
+            services.AddScoped<IPostRepository, PostRepository>();
             return services;
         }
     }
