@@ -9,7 +9,7 @@ import { AppNavbarComponent } from './layout/app-navbar/app-navbar.component';
   declarations: [
     AppComponent,
     PostListComponent,
-    AppNavbarComponent
+    AppNavbarComponent,
   ],
   imports: [
     BrowserModule
