@@ -41,6 +41,16 @@ namespace MicroBlog.API
             // Add services to the container.
             builder.Services.AddSqliteDbServices();
             builder.Services.AddRepositoryServices();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                    .WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
