@@ -2,7 +2,6 @@ using MicroBlog.API.Models;
 using MicroBlog.API.Query;
 using MicroBlog.API.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace MicroBlog.API.Controllers
 {
