@@ -1,3 +1,6 @@
+using MicroBlog.API.AppDbContext;
+using Microsoft.EntityFrameworkCore;
+
 namespace MicroBlog.API
 {
     public class Program
@@ -20,6 +23,7 @@ namespace MicroBlog.API
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                CreateDbIfNotExists(app);
             }
 
             app.UseHttpsRedirection();
@@ -34,14 +38,36 @@ namespace MicroBlog.API
         private static void AddServices(WebApplicationBuilder builder)
         {
             // Add services to the container.
+            builder.Services.AddSqliteDbServices();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
         }
 
+        private static void CreateDbIfNotExists(IApplicationBuilder app)
+        {
+            using var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope();
+
+            var context = serviceScope
+                .ServiceProvider
+                .GetService<BlogDbContext>();
+
+            context.Database.EnsureCreated();
+        }
 
     }
 
+    public static class ServiceCollectionExtensions
+    {
+        public static IServiceCollection AddSqliteDbServices(this IServiceCollection services)
+        {
+            services.AddDbContext<BlogDbContext>(options =>
+                           options.UseSqlite("Data Source=./Data/blog.db"));
+            return services;
+        }
+    }
 }
 
 
