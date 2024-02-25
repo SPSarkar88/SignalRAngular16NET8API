@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MicroBlog.API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MicroBlog.API.AppDbContext
 {
