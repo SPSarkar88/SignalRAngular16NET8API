@@ -34,7 +34,7 @@ namespace MicroBlog.API.Repository
         {
             return await _context.Posts
                 .AsNoTracking()
-                .Include(p => p.ImageId)
+                //.Include(p => p.ImageId)
                 .Where(x => x.Id == id)
                 .Where(x => x.Uid == uid)
                 .FirstOrDefaultAsync();
@@ -43,7 +43,7 @@ namespace MicroBlog.API.Repository
         {
             return await _context.Posts
                 .AsNoTracking()
-                .Include(p => p.ImageId)
+                //.Include(p => p.ImageId)
                 .ToListAsync();
         }
 
