@@ -1,0 +1,7 @@
+@MicroBlog.API_HostAddress = http://localhost:5057
+
+GET {{MicroBlog.API_HostAddress}}/posts/
+Accept: application/json
+
+###
+
