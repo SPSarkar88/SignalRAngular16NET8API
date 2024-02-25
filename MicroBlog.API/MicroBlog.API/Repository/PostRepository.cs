@@ -13,6 +13,10 @@ namespace MicroBlog.API.Repository
         }
         public async Task<Post> AddPost(Post post)
         {
+            post.Id = Guid.NewGuid();
+            post.UpdatedAt = DateTime.Now;
+            post.CreatedAt = DateTime.Now;
+            post.Uid = post.GetUid;
             await _context.Posts.AddAsync(post);
             await _context.SaveChangesAsync();
             return post;
@@ -45,6 +49,7 @@ namespace MicroBlog.API.Repository
 
         public async Task<bool> UpdatePost(Post post, Guid id, string uid)
         {
+            post.UpdatedAt = DateTime.Now;
             _context.Posts.Update(post);
             var isUpdateSucess = await _context.SaveChangesAsync();
             return isUpdateSucess > 0;
