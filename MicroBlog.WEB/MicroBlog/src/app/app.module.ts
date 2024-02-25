@@ -5,6 +5,10 @@ import { AppComponent } from './app.component';
 import { PostListComponent } from './component/post-list/post-list.component';
 import { AppNavbarComponent } from './layout/app-navbar/app-navbar.component';
 import { JumbotronComponent } from './layout/jumbotron/jumbotron.component';
+import { AppRoutingModule } from './app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from "@angular/common/http";
+
 
 @NgModule({
   declarations: [
@@ -13,9 +17,13 @@ import { JumbotronComponent } from './layout/jumbotron/jumbotron.component';
     AppNavbarComponent,
     JumbotronComponent
   ],
-  imports: [
-    BrowserModule
-  ],
+    imports: [
+        BrowserModule,
+      AppRoutingModule,
+      BrowserModule,
+      HttpClientModule,
+      ReactiveFormsModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
