@@ -1,5 +1,6 @@
 using MicroBlog.API.AppDbContext;
 using MicroBlog.API.Repository;
+using MicroBlog.API.SignalRHub;
 using Microsoft.EntityFrameworkCore;
 
 namespace MicroBlog.API
@@ -30,8 +31,9 @@ namespace MicroBlog.API
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseCors("AllowAnyOrigin");
             app.MapControllers();
+            app.MapHub<PostHub>("api/posthub");
 
             app.Run();
         }
@@ -44,13 +46,13 @@ namespace MicroBlog.API
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy", builder => builder
+                options.AddPolicy("AllowAnyOrigin", builder => builder
                     .WithOrigins("http://localhost:4200")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
-
+            builder.Services.AddSignalRPostHub();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -92,6 +94,13 @@ namespace MicroBlog.API
         public static IServiceCollection AddRepositoryServices(this IServiceCollection services)
         {
             services.AddScoped<IPostRepository, PostRepository>();
+            return services;
+        }
+
+        public static IServiceCollection AddSignalRPostHub(this IServiceCollection services)
+        {
+            services.AddTransient<IPostHub, PostHub>();
+            services.AddSignalR().AddMessagePackProtocol();
             return services;
         }
     }
