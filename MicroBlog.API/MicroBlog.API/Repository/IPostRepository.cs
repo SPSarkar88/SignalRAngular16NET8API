@@ -8,6 +8,6 @@ namespace MicroBlog.API.Repository
         Task<bool> DeletePost(Guid id, string uid);
         Task<Post?> GetPost(Guid id, string uid);
         Task<IEnumerable<Post>> GetPosts();
-        Task<bool> UpdatePost(Post post, Guid id, string uid);
+        Task<bool> UpdatePost(Post post);
     }
 }
