@@ -1,25 +1,29 @@
 using MicroBlog.API.Models;
 using MicroBlog.API.Query;
 using MicroBlog.API.Repository;
+using MicroBlog.API.SignalRHub;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MicroBlog.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiVersion("1.0")]
     public class PostsController : ControllerBase
     {
         private readonly IPostRepository _postRepository;
+        private readonly IPostHub _posthub;
         private readonly ILogger<PostsController> _logger;
 
         public PostsController(
-            IPostRepository postRepository, 
-            ILogger<PostsController> logger
-            )
+            IPostRepository postRepository,
+            ILogger<PostsController> logger,
+            IPostHub postHub)
         {
             _postRepository = postRepository;
             _logger = logger;
+            _posthub = postHub;
         }
 
         [HttpGet]
@@ -29,11 +33,10 @@ namespace MicroBlog.API.Controllers
             return posts.Any() ? Ok(posts) : NotFound();
         }
 
-        [HttpGet]
-        [Route("{query.id:guid}/{query.uid}")]
-        public async Task<IActionResult> Get(GetPostQuery query)
+        [HttpGet("{id:guid}/{uid}")]
+        public async Task<IActionResult> Get(Guid id, string uid)
         {
-            var post = await _postRepository.GetPost(query.Id, query.Uid);
+            var post = await _postRepository.GetPost(id, uid);
             return post == null ? NotFound() : Ok(post);
         }
 
@@ -45,35 +48,36 @@ namespace MicroBlog.API.Controllers
             {
                 var post = new Post
                 {
-                    Uid = postCommand.Uid,
-                    PostContent = postCommand.PostContent,
-                    ImageId = Guid.Parse(postCommand.ImageId)
+                    
+                    PostContent = postCommand.PostContent
                 };
                 newpost = await _postRepository.AddPost(post);
             }
+            await _posthub.SendPostUpdateEvent();
             return newpost == null ? BadRequest("Post creation unsuccessfull") : Ok(newpost);
         }
 
         [HttpPut]
-        [Route("{postCommand.id:guid}/{postCommand.uid}")]
         public async Task<IActionResult> Put([FromBody] UpdatePostCommand postCommand)
         {
             var id = Guid.Parse(postCommand.Id);
             var post = new Post
             {
+                Id = id,
                 PostContent = postCommand.PostContent,
-                ImageId = Guid.Parse(postCommand.ImageId)
+                Uid = postCommand.Uid
             };
-            var result = await _postRepository.UpdatePost(post, id, postCommand.Uid);
+            var result = await _postRepository.UpdatePost(post);
+            await _posthub.SendPostUpdateEvent();
             return result ? Ok(postCommand) : BadRequest("Post update unsuccessfull");
         }
 
         [HttpDelete]
-        [Route("{postCommand.id:guid}/{postCommand.uid}")]
         public async Task<IActionResult> Delete([FromBody] DeletePostCommand postCommand)
         {
             var id = Guid.Parse(postCommand.Id);
             var result = await _postRepository.DeletePost(id, postCommand.Uid);
+            await _posthub.SendPostUpdateEvent();
             return result ? Ok("Post deleted.") : BadRequest("Post deletion unsuccessfull.");
         }
 
