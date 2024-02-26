@@ -8,6 +8,7 @@ import { JumbotronComponent } from './layout/jumbotron/jumbotron.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from "@angular/common/http";
+import { PostService } from './service/post-service.service';
 
 
 @NgModule({
@@ -24,7 +25,9 @@ import { HttpClientModule } from "@angular/common/http";
       HttpClientModule,
       ReactiveFormsModule,
     ],
-  providers: [],
+  providers: [
+    PostService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
