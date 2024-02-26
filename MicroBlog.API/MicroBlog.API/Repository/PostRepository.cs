@@ -16,7 +16,7 @@ namespace MicroBlog.API.Repository
             post.Id = Guid.NewGuid();
             post.UpdatedAt = DateTime.Now;
             post.CreatedAt = DateTime.Now;
-            post.Uid = post.GetUid;
+            post.Uid = UidGenerator.GetUid();
             await _context.Posts.AddAsync(post);
             await _context.SaveChangesAsync();
             return post;
@@ -34,7 +34,6 @@ namespace MicroBlog.API.Repository
         {
             return await _context.Posts
                 .AsNoTracking()
-                //.Include(p => p.ImageId)
                 .Where(x => x.Id == id)
                 .Where(x => x.Uid == uid)
                 .FirstOrDefaultAsync();
@@ -43,11 +42,11 @@ namespace MicroBlog.API.Repository
         {
             return await _context.Posts
                 .AsNoTracking()
-                //.Include(p => p.ImageId)
+                .OrderByDescending(x => x.UpdatedAt)
                 .ToListAsync();
         }
 
-        public async Task<bool> UpdatePost(Post post, Guid id, string uid)
+        public async Task<bool> UpdatePost(Post post)
         {
             post.UpdatedAt = DateTime.Now;
             _context.Posts.Update(post);
