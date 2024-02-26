@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { PostListComponent } from './component/post-list/post-list.component';
 import { AppNavbarComponent } from './layout/app-navbar/app-navbar.component';
@@ -9,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from "@angular/common/http";
 import { PostService } from './service/post-service.service';
+import { AppSignalRService } from './service/app-signal-r.service';
 
 
 @NgModule({
@@ -23,10 +23,11 @@ import { PostService } from './service/post-service.service';
       AppRoutingModule,
       BrowserModule,
       HttpClientModule,
-      ReactiveFormsModule,
+      ReactiveFormsModule
     ],
   providers: [
-    PostService
+    PostService,
+    AppSignalRService
   ],
   bootstrap: [AppComponent]
 })
