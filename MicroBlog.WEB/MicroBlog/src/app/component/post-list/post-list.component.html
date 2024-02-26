@@ -1,19 +1,13 @@
 <div class="container">
     <h3 class="display-5 pb-4 pt-2">Latest posts</h3>
-    <div class="card mb-3">
+    <div class="card mb-3" *ngFor="let post of posts">
       <div class="card-body">
-        <h5 class="card-title">Card title</h5>
+        <h5 class="card-title">{{ post.postContent }}</h5>
         <p class="card-text">
           <small class="text-muted">Last updated 3 mins ago</small>
         </p>
+        <button class="btn btn-primary btn-sm mr-3" (click)="toEditPage(post)">Edit</button>
+        <button class="btn btn-danger btn-sm" (click)="toDeletePage(post)">Delete</button>
       </div>
     </div>
-  <div class="card mb-3">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">
-        <small class="text-muted">Last updated 3 mins ago</small>
-      </p>
-    </div>
-  </div>
 </div>
