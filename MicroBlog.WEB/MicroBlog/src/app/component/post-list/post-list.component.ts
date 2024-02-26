@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr'
 import { Post } from 'src/app/model/post.model';
 import { environment } from 'src/environment/environment';
+import * as signalR from '@microsoft/signalr';
+import { AppSignalRService } from 'src/app/service/app-signal-r.service';
 
 @Component({
   selector: 'app-post-list',
@@ -16,26 +18,20 @@ export class PostListComponent implements OnInit{
 
   constructor(private postService: PostService, 
     private router: Router, 
-    private hubConn: HubConnection) {
+    private signalRService: AppSignalRService) {
 
   }
 
   ngOnInit(): void {
     this.getPosts();
 
-    this.hubConn = new HubConnectionBuilder()
-                      .withUrl(this.hubUrl)
-                      .build()
-
-    this.hubConn.start()
-    .then(() => {
-      console.log('Connection started')
-    })
-    .catch(err => console.log('Error while starting connection: ' + err))
-
-    this.hubConn.on('PostAdded', (post: Post) => {
-      this.posts.push(post)
-    })
+    this.signalRService.startConnection(this.hubUrl);
+  
+    if (this.signalRService.hubConnection) {
+      this.signalRService.hubConnection.on('ReceivePost', (post: Post) => {
+        this.getPosts();
+      });
+    }
   }
 
   getPosts() {
