@@ -9,8 +9,5 @@ namespace MicroBlog.API.Models
         [MaxLength(250)]
         public string PostContent { get; set; }
 
-        public Image Image { get; set; }
-
-        public Guid ImageId { get; set; }
     }
 }

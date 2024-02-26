@@ -8,8 +8,13 @@ namespace MicroBlog.API.Models
         public string Uid { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+    }
 
-        [NotMapped]
-        public string GetUid => DateTime.Now.Ticks.ToString();
+    public static class UidGenerator
+    {
+        public static string GetUid()
+        {
+            return  DateTime.Now.Ticks.ToString();
+        }
     }
 }

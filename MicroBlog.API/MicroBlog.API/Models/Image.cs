@@ -7,8 +7,5 @@ namespace MicroBlog.API.Models
         [MaxLength(250)]
         public string Path { get; set; }
 
-        public Guid PostId { get; set; }
-
-        public Post Post { get; set; }
     }
 }
