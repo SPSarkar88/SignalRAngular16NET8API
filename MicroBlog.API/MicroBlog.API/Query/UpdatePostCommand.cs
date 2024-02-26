@@ -10,6 +10,5 @@ namespace MicroBlog.API.Query
         [Required]
         [MaxLength(250)]
         public string PostContent { get; set; }
-        public string ImageId { get; set; }
     }
 }
