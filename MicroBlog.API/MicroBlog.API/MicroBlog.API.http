@@ -1,7 +1,38 @@
-@MicroBlog.API_HostAddress = http://localhost:5057
+@MicroBlog.API_HostAddress = https://localhost:44312/api
+@id = a3f38c57-3d82-4374-b783-3c4c949f5247
+@uid = 638445872309149824
 
-GET {{MicroBlog.API_HostAddress}}/posts/
+GET {{MicroBlog.API_HostAddress}}/posts
 Accept: application/json
 
 ###
 
+GET {{MicroBlog.API_HostAddress}}/posts/{{id}}/{{uid}}
+Accept: application/json
+
+###
+POST {{MicroBlog.API_HostAddress}}/posts/
+Content-Type: application/json
+
+{
+  "postContent": "My first post"
+}
+
+###
+PUT {{MicroBlog.API_HostAddress}}/posts/
+Content-Type: application/json
+
+{
+  "id": "string",
+  "uid": "string",
+  "postContent": "string"
+}
+
+### 
+DELETE {{MicroBlog.API_HostAddress}}/posts
+Content-Type: application/json
+
+{
+  "id": "string",
+  "uid": "string"
+}
