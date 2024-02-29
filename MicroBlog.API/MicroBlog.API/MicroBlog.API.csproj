@@ -25,4 +25,8 @@
     <Folder Include="Data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\MicroBlog.Common\MicroBlog.Common.csproj" />
+  </ItemGroup>
+
 </Project>

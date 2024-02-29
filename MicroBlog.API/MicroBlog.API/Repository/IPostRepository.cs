@@ -1,4 +1,4 @@
-﻿using MicroBlog.API.Models;
+﻿using MicroBlog.Common.Models;
 
 namespace MicroBlog.API.Repository
 {

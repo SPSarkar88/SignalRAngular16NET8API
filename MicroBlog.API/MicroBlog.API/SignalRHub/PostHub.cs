@@ -1,7 +1,4 @@
-﻿using MicroBlog.API.Models;
-using MicroBlog.API.Repository;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.AspNetCore.SignalR;
 
 namespace MicroBlog.API.SignalRHub
 {

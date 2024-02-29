@@ -1,4 +1,4 @@
-﻿using MicroBlog.API.Models;
+﻿using MicroBlog.Common.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace MicroBlog.API.AppDbContext

@@ -1,4 +1,4 @@
-using MicroBlog.API.Models;
+using MicroBlog.Common.Models;
 using MicroBlog.API.Query;
 using MicroBlog.API.Repository;
 using MicroBlog.API.SignalRHub;
