@@ -1,5 +1,5 @@
 using MicroBlog.Common.Models;
-using MicroBlog.API.Query;
+using MicroBlog.Common.Query;
 using MicroBlog.API.Repository;
 using MicroBlog.API.SignalRHub;
 using Microsoft.AspNetCore.Mvc;
@@ -69,7 +69,7 @@ namespace MicroBlog.API.Controllers
             };
             var result = await _postRepository.UpdatePost(post);
             await _posthub.SendPostUpdateEvent();
-            return result ? Ok(postCommand) : BadRequest("Post update unsuccessfull");
+            return result ? Ok(post) : BadRequest("Post update unsuccessfull");
         }
 
         [HttpDelete]
@@ -78,7 +78,8 @@ namespace MicroBlog.API.Controllers
             var id = Guid.Parse(postCommand.Id);
             var result = await _postRepository.DeletePost(id, postCommand.Uid);
             await _posthub.SendPostUpdateEvent();
-            return result ? Ok("Post deleted.") : BadRequest("Post deletion unsuccessfull.");
+            return result ? Ok(new {msg="Post Deleteion Sucessfull."}) 
+                : BadRequest(new { msg="Post deletion unsuccessfull." });
         }
 
     }
