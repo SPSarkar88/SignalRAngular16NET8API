@@ -15,7 +15,7 @@ namespace MicroBlog.WebApp
 
             builder.Services
             .AddRefitClient<IPostClient>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:44312/api"));
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(apiUrl));
             builder.Services.AddControllersWithViews();
 
             // Add services to the container.
