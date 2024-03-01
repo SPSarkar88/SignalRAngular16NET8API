@@ -1,4 +1,5 @@
 using MicroBlog.WebApp.HttpClient;
+using MicroBlog.WebApp.SignalRHub;
 using Refit;
 
 namespace MicroBlog.WebApp
@@ -16,6 +17,8 @@ namespace MicroBlog.WebApp
             builder.Services
             .AddRefitClient<IPostClient>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(apiUrl));
+            builder.Services.AddTransient<IPostHub, PostHub>();
+            builder.Services.AddSignalR();
             builder.Services.AddControllersWithViews();
 
             // Add services to the container.
@@ -41,7 +44,7 @@ namespace MicroBlog.WebApp
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+            app.MapHub<PostHub>("posthub");
             app.Run();
         }
     }

@@ -10,7 +10,7 @@ namespace MicroBlog.WebApp.HttpClient
         // create refit PostClient
         //[Headers("accept: application/json")]
         [Get("/Posts")]
-        Task<IEnumerable<Post>> GetPostsAsync();
+        Task<ApiResponse<IEnumerable<Post>>> GetPostsAsync();
 
         //[Headers("accept: application/json")]
         [Get("/Posts/{id}/{uid}")]
@@ -18,15 +18,15 @@ namespace MicroBlog.WebApp.HttpClient
 
         [Headers("Content-Type: application/json;charset=utf-8")]
         [Post("/posts")]
-        Task<Post> AddPostAsync([Body] AddPostCommand post);
+        Task<ApiResponse<Post>> AddPostAsync([Body] AddPostCommand post);
 
 
         [Headers("Content-Type: application/json;charset=utf-8")]
         [Put("/posts")]
-        Task<UpdatePostCommand> UpdatePostAsync([Body] UpdatePostCommand post);
+        Task<ApiResponse<Post>> UpdatePostAsync([Body] UpdatePostCommand post);
 
         [Headers("Content-Type: application/json;charset=utf-8")]
         [Delete("/posts")]
-        Task<UpdatePostCommand> DeletePostAsync([Body] DeletePostCommand post);
+        Task<ApiResponse<Post>> DeletePostAsync([Body] DeletePostCommand post);
     }
 }

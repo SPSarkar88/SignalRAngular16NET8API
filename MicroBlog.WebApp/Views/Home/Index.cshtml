@@ -13,6 +13,8 @@
         <div class="card">
             <div class="card-body">
                 <p class="card-text">@post.PostContent</p>
+                <a asp-controller="Home" asp-action="GetPost" 
+                asp-route-id="@post.Id" asp-route-uid="@post.Uid">Edit</a>
             </div>
         </div>
     }
