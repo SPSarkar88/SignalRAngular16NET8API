@@ -31,7 +31,8 @@ namespace MicroBlog.API
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-            app.UseCors("AllowAnyOrigin");
+            app.UseCors("AllowAngularOrigin");
+            app.UseCors("AllowWebAppOrigin");
             app.MapControllers();
             app.MapHub<PostHub>("api/posthub");
 
@@ -46,11 +47,18 @@ namespace MicroBlog.API
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowAnyOrigin", builder => builder
+                options.AddPolicy("AllowAngularOrigin", builder => builder
                     .WithOrigins("http://localhost:4200")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
+
+                options.AddPolicy("AllowWebAppOrigin", builder => builder
+                    .WithOrigins("https://localhost:7190/")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    .WithMethods("GET","POST","PUT","DELETE"));
             });
             builder.Services.AddSignalRPostHub();
             builder.Services.AddControllers();

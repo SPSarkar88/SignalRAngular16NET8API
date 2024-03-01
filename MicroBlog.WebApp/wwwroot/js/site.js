@@ -5,30 +5,9 @@ const connection = new signalR.HubConnectionBuilder()
     .configureLogging(signalR.LogLevel.Information)
     .build();
 
-async function start() {
-    try {
-        await connection.start();
-        console.log("SignalR Connected.");
-    } catch (err) {
-        console.log(err);
-        setTimeout(start, 5000);
-    }
-};
-
-connection.onclose(async () => {
-    await start();
-});
-connection.on("ReceivePost", () => {
-    getPosts();
-});
-
-// Start the connection.
-start();
-
-
 function getPosts() {
     $.ajax({
-        url: "https://localhost:7190/api/posts",
+        url: "https://localhost:7190/Home",
         type: "GET",
         success: function (data) {
             console.log(data);
@@ -42,3 +21,27 @@ function getPosts() {
         }
     });
 }
+
+connection.on("ReceivePost", () => {
+    getPosts();
+});
+
+async function start() {
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+};
+
+connection.onclose(async () => {
+    await start();
+});
+
+
+// Start the connection.
+start();
+
+

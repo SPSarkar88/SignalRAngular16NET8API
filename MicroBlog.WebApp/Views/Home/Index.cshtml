@@ -6,7 +6,7 @@
 <div class="text-center">
     <h1 class="display-4">Latest posts</h1>
 </div>
-    @* create bootstrap card *@
+<a asp-action="AddPost" class="btn btn-primary">Add Post</a>
 <div class="card-deck">
     @foreach (var post in Model)
     {

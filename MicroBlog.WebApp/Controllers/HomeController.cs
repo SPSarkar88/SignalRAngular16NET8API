@@ -44,8 +44,14 @@ namespace MicroBlog.WebApp.Controllers
             return View(nameof(Error));
         }
 
+        [HttpGet]
+        public IActionResult AddPost()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public async Task<IActionResult> AddPost([FromBody] AddPostCommand postCommand)
+        public async Task<IActionResult> CreatePost([FromForm] AddPostCommand postCommand)
         {
             var response = await _postClient.AddPostAsync(postCommand);
             if (response.IsSuccessStatusCode)
@@ -58,7 +64,7 @@ namespace MicroBlog.WebApp.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> UpdatePost([FromBody] UpdatePostCommand postCommand)
+        public async Task<IActionResult> UpdatePost([FromForm] UpdatePostCommand postCommand)
         {
             var response = await _postClient.UpdatePostAsync(postCommand);
             if (response.IsSuccessStatusCode)
@@ -70,7 +76,7 @@ namespace MicroBlog.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeletePost([FromBody] DeletePostCommand postCommand)
+        public async Task<IActionResult> DeletePost([FromForm] DeletePostCommand postCommand)
         {
             var response = await _postClient.DeletePostAsync(postCommand);
             if (response.IsSuccessStatusCode)
