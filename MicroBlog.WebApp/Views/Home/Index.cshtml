@@ -1,0 +1,19 @@
+﻿@model IEnumerable<MicroBlog.Common.Models.Post>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Latest posts</h1>
+</div>
+    @* create bootstrap card *@
+<div class="card-deck">
+    @foreach (var post in Model)
+    {
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text">@post.PostContent</p>
+            </div>
+        </div>
+    }
+</div>
